@@ -1,0 +1,76 @@
+---
+title: 'Queue System'
+description: 'Lane-aware FIFO queue preventing concurrent state corruption'
+---
+
+## Overview
+
+OpenClaw prevents concurrent state corruption through a lane-aware FIFO queue guaranteeing **only one active run per session** while permitting parallelism across different sessions within configured limits.
+
+## Queue Modes
+
+<Tabs>
+  <Tab title="Collect (Default)">
+    **Mode:** `collect`
+
+    Coalesces multiple messages into a single follow-up turn. This is the default behavior that batches incoming messages while a run is active.
+
+    ```
+    Message 1 ─┐
+    Message 2 ─┼─→ [Coalesced Turn]
+    Message 3 ─┘
+    ```
+  </Tab>
+  <Tab title="Follow-up">
+    **Mode:** `followup`
+
+    Waits until current run completion before processing the next message. Messages are queued and processed sequentially.
+
+    ```
+    Run Active → [Message Queued] → Run Complete → [Process Message]
+    ```
+  </Tab>
+  <Tab title="Steer">
+    **Mode:** `steer`
+
+    Injects during current run at tool boundaries. Allows mid-run intervention without waiting for completion.
+
+    ```
+    Run Active → [Tool Boundary] → [Inject Message] → Continue Run
+    ```
+  </Tab>
+</Tabs>
+
+## Key Guarantees
+
+<CardGroup cols={2}>
+  <Card title="Single Writer" icon="pen">
+    Only one active run per session at any time
+  </Card>
+  <Card title="Cross-Session Parallelism" icon="layer-group">
+    Different sessions can run concurrently within configured limits
+  </Card>
+  <Card title="FIFO Ordering" icon="arrow-down-1-9">
+    Messages are processed in the order received
+  </Card>
+  <Card title="Lane Awareness" icon="road">
+    Queue respects session boundaries and isolation
+  </Card>
+</CardGroup>
+
+## Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────┐
+│                   Gateway                        │
+│  ┌─────────────────────────────────────────────┐│
+│  │              Lane-Aware Queue               ││
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐       ││
+│  │  │Session A│ │Session B│ │Session C│       ││
+│  │  │  FIFO   │ │  FIFO   │ │  FIFO   │       ││
+│  │  └────┬────┘ └────┬────┘ └────┬────┘       ││
+│  └───────┼──────────┼──────────┼──────────────┘│
+│          ▼          ▼          ▼                │
+│     [Runtime]  [Runtime]  [Runtime]             │
+└─────────────────────────────────────────────────┘
+```

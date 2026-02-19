@@ -1,0 +1,94 @@
+---
+title: 'Input Vectors'
+description: 'Five input types creating the autonomy illusion'
+---
+
+## Overview
+
+OpenClaw responds to multiple input types beyond direct user messages. These five input vectors create the appearance of autonomous behavior.
+
+## The Five Input Vectors
+
+<AccordionGroup>
+  <Accordion title="1. Direct Messages" icon="message">
+    Messages from integrated communication channels (chat, CLI, API calls).
+
+    This is the most common input type—explicit user requests.
+  </Accordion>
+
+  <Accordion title="2. Heartbeats" icon="heart-pulse">
+    Periodic check-ins at configurable intervals (default: 30 minutes).
+
+    **Behavior:**
+    - Agent evaluates if anything requires attention
+    - Responds with `HEARTBEAT_OK` if nothing to do
+    - May trigger autonomous actions if conditions are met
+  </Accordion>
+
+  <Accordion title="3. Webhooks" icon="webhook">
+    External HTTP triggers from third-party services.
+
+    **Configuration options:**
+    - Immediate processing
+    - Deferred to next heartbeat
+  </Accordion>
+
+  <Accordion title="4. Hooks" icon="code-branch">
+    Event-driven automation discovered from multiple directories.
+
+    Hooks respond to internal system events and can trigger agent actions based on:
+    - File changes
+    - Process events
+    - Custom triggers
+  </Accordion>
+
+  <Accordion title="5. Scheduled/Timer Events" icon="clock">
+    Time-based triggers configured via schedules.
+
+    Enables cron-like automation for:
+    - Daily reports
+    - Periodic maintenance
+    - Scheduled workflows
+  </Accordion>
+</AccordionGroup>
+
+## How Autonomy Works
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Input Sources                         │
+│                                                          │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │
+│  │  Direct  │ │Heartbeat │ │ Webhooks │ │  Hooks   │   │
+│  │ Messages │ │  Timer   │ │          │ │          │   │
+│  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘   │
+│       │            │            │            │          │
+│       └────────────┴─────┬──────┴────────────┘          │
+│                          ▼                               │
+│                    ┌──────────┐                          │
+│                    │ Gateway  │                          │
+│                    │  Queue   │                          │
+│                    └────┬─────┘                          │
+│                         ▼                                │
+│                    ┌──────────┐                          │
+│                    │  Agent   │                          │
+│                    │ Runtime  │                          │
+│                    └──────────┘                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+## The Pattern Explained
+
+<Note>
+What appears as "autonomous behavior" is simply:
+1. **Event** → Something creates an event (timer fires, webhook received)
+2. **Queue** → Gateway queues the event for the appropriate session
+3. **Execute** → Agent runtime processes the turn
+4. **Action** → Tools perform work based on agent decisions
+</Note>
+
+The critical questions aren't whether agents are "alive," but rather:
+- What events activate them?
+- What state they control?
+- What invariants they enforce?
+- Which tools they can execute?

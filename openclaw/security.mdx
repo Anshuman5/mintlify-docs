@@ -1,0 +1,101 @@
+---
+title: 'Security'
+description: 'Security considerations and mitigations for OpenClaw'
+---
+
+## Attack Surface
+
+<Warning>
+OpenClaw presents substantial attack surface given its capabilities: reading files, browsing, executing tools, and installing extensions.
+</Warning>
+
+### Documented Risks
+
+| Risk | Description |
+|------|-------------|
+| Prompt Injection | Malicious input attempting to manipulate agent behavior |
+| Skill Supply-Chain | Vulnerabilities in community-contributed skills |
+| Credential Exposure | Accidental leakage of secrets and API keys |
+| Command Misfires | Unintended execution of destructive commands |
+
+## Built-in Mitigations
+
+<CardGroup cols={2}>
+  <Card title="Pairing Code Expiry" icon="clock">
+    Pairing codes expire after one hour; pending requests are capped
+  </Card>
+  <Card title="Gateway Token" icon="key">
+    Token requirement for non-local access
+  </Card>
+  <Card title="Secure DM Mode" icon="lock">
+    Isolation for multi-user scenarios
+  </Card>
+  <Card title="Sandboxing" icon="box">
+    Least-privilege filesystem access when enabled
+  </Card>
+</CardGroup>
+
+### Security Audit
+
+Run the built-in security audit command to review your configuration:
+
+```bash
+openclaw security audit
+```
+
+## Skill Security
+
+<Warning>
+Treat community skills as **untrusted code** requiring:
+- Code scanning before installation
+- Version pinning to prevent unexpected updates
+- Regular audits of installed skills
+</Warning>
+
+## Deployment Recommendations
+
+<Steps>
+  <Step title="Isolate Infrastructure">
+    Run OpenClaw on dedicated hardware or VM
+  </Step>
+  <Step title="Scope Credentials">
+    Use separate, scoped tokens for external services
+  </Step>
+  <Step title="Start Read-Only">
+    Begin with read-only workflows before enabling execution
+  </Step>
+  <Step title="Enable Sandboxing">
+    Configure filesystem sandboxing to limit access
+  </Step>
+  <Step title="Audit Regularly">
+    Run `openclaw security audit` periodically
+  </Step>
+</Steps>
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Credential Management">
+    - Never store credentials in session files
+    - Use environment variables or secret managers
+    - Rotate tokens regularly
+  </Accordion>
+
+  <Accordion title="Network Security">
+    - Require gateway tokens for remote access
+    - Use TLS for all connections
+    - Limit exposed ports
+  </Accordion>
+
+  <Accordion title="Skill Hygiene">
+    - Review skill source code before installation
+    - Pin skill versions in configuration
+    - Remove unused skills
+  </Accordion>
+
+  <Accordion title="Monitoring">
+    - Log all agent actions
+    - Alert on unusual patterns
+    - Review session transcripts periodically
+  </Accordion>
+</AccordionGroup>

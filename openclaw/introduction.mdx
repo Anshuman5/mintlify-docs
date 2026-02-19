@@ -1,0 +1,37 @@
+---
+title: 'Introduction'
+description: 'Understanding OpenClaw Architecture - Control Plane, Sessions, and the Event Loop'
+---
+
+## Core Thesis
+
+OpenClaw appears autonomous because it responds to multiple input types beyond user messages, not because it possesses genuine consciousness. The system implements an event-driven architecture with disciplined state management rather than magical reasoning.
+
+## What OpenClaw Is
+
+<CardGroup cols={2}>
+  <Card title="Gateway (Control Plane)" icon="tower-control">
+    Routes events from multiple sources and serves as the source of truth for all session state
+  </Card>
+  <Card title="Agent Runtime" icon="robot">
+    Executes turns: calling LLMs, using tools, persisting state, and responding
+  </Card>
+</CardGroup>
+
+## What OpenClaw Isn't
+
+<Warning>
+OpenClaw is **not** a sentient system with continuous background reasoning, nor an entity that "wakes up and thinks."
+</Warning>
+
+Actions appearing spontaneous at odd hours result from timers, schedules, webhooks, or hooks creating events—followed by standard agent execution cycles.
+
+## Key Insight
+
+The "3:00 AM insight" example demonstrates a simple pattern:
+1. Time creates an event
+2. Gateway queues it
+3. Agent executes a turn
+4. Tools perform actions
+
+OpenClaw's apparent autonomy derives from engineering patterns rather than emergence: time-based triggers, event-driven inputs, persistent disk-based state, and disciplined agent loops.

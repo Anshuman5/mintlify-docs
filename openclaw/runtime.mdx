@@ -1,0 +1,69 @@
+---
+title: 'Agent Runtime'
+description: 'The execution loop and tool system'
+---
+
+## The Agent Runtime Loop
+
+The agent runtime follows a standard execution sequence for each turn:
+
+<Steps>
+  <Step title="Load Context">
+    Load session history and workspace context
+  </Step>
+  <Step title="Call LLM">
+    Send context to the language model for inference
+  </Step>
+  <Step title="Execute Tools">
+    Process tool calls (browser, filesystem, shell, nodes, plugins)
+  </Step>
+  <Step title="Persist Updates">
+    Save state changes to session and workspace
+  </Step>
+  <Step title="Respond">
+    Return response to user or remain silent intentionally
+  </Step>
+</Steps>
+
+## Execution Flow
+
+```
+┌──────────────────────────────────────────────────────┐
+│                    Agent Runtime                      │
+│                                                       │
+│  ┌─────────┐    ┌─────────┐    ┌─────────────────┐  │
+│  │  Load   │───▶│  Call   │───▶│  Execute Tools  │  │
+│  │ Context │    │   LLM   │    │                 │  │
+│  └─────────┘    └─────────┘    └────────┬────────┘  │
+│                                          │           │
+│  ┌─────────┐    ┌─────────────────┐     │           │
+│  │ Respond │◀───│ Persist Updates │◀────┘           │
+│  └─────────┘    └─────────────────┘                 │
+└──────────────────────────────────────────────────────┘
+```
+
+## Tool Categories
+
+<CardGroup cols={2}>
+  <Card title="Browser" icon="globe">
+    Web browsing and navigation capabilities
+  </Card>
+  <Card title="Filesystem" icon="folder">
+    File reading, writing, and management
+  </Card>
+  <Card title="Shell" icon="terminal">
+    Command execution and system interaction
+  </Card>
+  <Card title="Plugins" icon="plug">
+    Extensible tool system via plugins
+  </Card>
+</CardGroup>
+
+## Silent Responses
+
+<Info>
+The agent may intentionally remain silent after a turn. This is a valid response pattern, not an error. Silent responses occur when:
+- No user-facing output is required
+- Background processing completed successfully
+- Heartbeat acknowledgment (returns `HEARTBEAT_OK`)
+</Info>

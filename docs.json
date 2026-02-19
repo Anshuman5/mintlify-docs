@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Anshuman Documentation",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -43,6 +43,23 @@
               "ai-tools/cursor",
               "ai-tools/claude-code",
               "ai-tools/windsurf"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "OpenClaw",
+        "groups": [
+          {
+            "group": "Architecture",
+            "pages": [
+              "openclaw/introduction",
+              "openclaw/architecture",
+              "openclaw/sessions",
+              "openclaw/queue-system",
+              "openclaw/runtime",
+              "openclaw/input-vectors",
+              "openclaw/security"
             ]
           }
         ]

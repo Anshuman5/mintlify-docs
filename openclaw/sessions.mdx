@@ -1,0 +1,61 @@
+---
+title: 'Sessions & State'
+description: 'Session isolation and state management in OpenClaw'
+---
+
+## Sessions: Deliberate Isolation
+
+The session model prevents context leakage across different communication channels.
+
+### Session Types
+
+<CardGroup cols={2}>
+  <Card title="Primary Session" icon="user">
+    DM-like session per agent (typically labeled "main")
+  </Card>
+  <Card title="Channel Sessions" icon="comments">
+    Separate sessions for groups, channels, and threads
+  </Card>
+  <Card title="Secure DM Mode" icon="lock">
+    Optional mode isolating communications per sender/channel/account
+  </Card>
+</CardGroup>
+
+## Storage Locations
+
+Sessions are persisted to the filesystem:
+
+| Type | Location |
+|------|----------|
+| Session Index | `~/.openclaw/agents/<agentId>/sessions/sessions.json` |
+| Transcripts | `~/.openclaw/agents/<agentId>/sessions/<SessionId>.jsonl` |
+
+<Info>
+Transcripts use JSONL format (JSON Lines) for efficient append operations.
+</Info>
+
+## Benefits
+
+<AccordionGroup>
+  <Accordion title="Durability">
+    Sessions survive restarts because state is persisted to disk
+  </Accordion>
+  <Accordion title="Isolation">
+    Different communication channels maintain separate contexts
+  </Accordion>
+  <Accordion title="Security">
+    Secure DM mode provides additional isolation for multi-user scenarios
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+Session files contain sensitive content. Ensure appropriate file system permissions are configured.
+</Warning>
+
+## Memory Mechanism
+
+OpenClaw achieves continuity through file-based state persistence, not model weight modifications. The Agent Workspace functions as the agent's home and memory repository.
+
+<Note>
+"The workspace is the default working directory, not a hard sandbox"—relative paths resolve within it, but absolute paths can reach elsewhere absent sandboxing enablement.
+</Note>
