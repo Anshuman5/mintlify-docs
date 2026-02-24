@@ -136,7 +136,7 @@ Every step of §7's SOLVE loop traced with the exact data that passes between st
 |-----|-----|
 | **What happens** | Human provides raw intent + irreducible core constraints. System creates root node. |
 | **Input** | Raw intent (any modality), human-seeded core constraints, optional human suggestions/ideas (treated as unprivileged candidate artifacts) |
-| **Output** | \`Node { id, parent_id:null, goal_description |
+| **Output** | \`Node \{ id, parent_id:null, goal_description |
 | **Infra required** | Node Store (create node), Constraint typing (classify each constraint as logic\|semantic) |
 | **At boot** | Claude Code runs the iterative extraction dialogue (formalization §14 M1): proposes candidate constraints, human confirms/rejects, checks for irreducible core |
 | **Growth path** | Domain-specific goal synthesizers that know which constraints to probe (e.g., hardware synthesizer always asks thermal/structural/cost/timeline) |
@@ -253,9 +253,9 @@ for child, weight in zip(children, normalize(child_estimates)):
 | **Output** | New `output_artifact_id` (retry output) → back to VERIFY (step 6), OR escalation signal (exhausted) |
 | **Infra required** | Attempt Store (read prior attempts, persist feedback + new attempt), Node Store (update `attempt_count`), Knowledge Graph (record failure_mode + attempt outcome), Budget Tracker (retry costs cost/time) |
 | **Context injected** | Full attempt history: `[Attempt 1: tried X, failed because constraint C3 violated (detail). Attempt 2: tried Y, failed because ...]` |
-| **At boot** | Claude Code generates feedback from violation trace + attempt history. The violation trace is key — not just "UNSAT" but "constraint C3 failed: expected latency < 200ms, got 450ms, likely caused by synchronous DB call in handler." |
+| **At boot** | Claude Code generates feedback from violation trace + attempt history. The violation trace is key — not just "UNSAT" but "constraint C3 failed: expected latency &lt; 200ms, got 450ms, likely caused by synchronous DB call in handler." |
 | **Termination** | `attempt_count >= T_max` → escalate to BUILD (step 10) |
-| **Growth path** | Z3 abductive repair (Symbolic Reasoning doc §4.3): computes minimum-cost parameter changes to achieve SAT. ASP enumeration of valid alternatives. Prescriptive repairs, not just diagnostics.Stagnation detection: if sigma improvement across last N retries falls below epsilon (e.g., delta_sigma < 0.05 over 2 consecutive attempts), short-circuit to selecting_resolver or escalate to BUILD early rather than exhausting T_max. Data available in resolution_attempts. Additionally, consider allowing child resolvers to emit a RESCOPE signal when UNSAT appears to stem from parent decomposition rather than resolver inadequacy. |
+| **Growth path** | Z3 abductive repair (Symbolic Reasoning doc §4.3): computes minimum-cost parameter changes to achieve SAT. ASP enumeration of valid alternatives. Prescriptive repairs, not just diagnostics.Stagnation detection: if sigma improvement across last N retries falls below epsilon (e.g., delta_sigma &lt; 0.05 over 2 consecutive attempts), short-circuit to selecting_resolver or escalate to BUILD early rather than exhausting T_max. Data available in resolution_attempts. Additionally, consider allowing child resolvers to emit a RESCOPE signal when UNSAT appears to stem from parent decomposition rather than resolver inadequacy. |
 
 ### Step 10: Exhausted → BUILD
 
@@ -277,7 +277,7 @@ for child, weight in zip(children, normalize(child_estimates)):
 | **Input** | Capability gap description, attempt history from Attempt Store (what was tried and why), budget/time state, Knowledge Graph context |
 | **Output** | Human-built tool (resolver/verifier/checker) → registered in Registry + Knowledge Graph (toolization is mandatory; no one-off answers) |
 | **Infra required** | Human interface (present gap + context, accept resolver), Registry (register human resolver), Knowledge Graph (add `built_by→actor:human` edge, `provides→capability:<tag>` edge) |
-| **Context presented to human** | Structured summary: "Need: {capability}. Tried: {attempts with outcomes}. Failed because: {root causes}. Budget remaining: {amount}. Similar past resolutions: {KG results}." |
+| **Context presented to human** | Structured summary: "Need: \{capability\}. Tried: \{attempts with outcomes\}. Failed because: \{root causes\}. Budget remaining: \{amount\}. Similar past resolutions: \{KG results\}." |
 | **At boot** | The system's first HIRE calls will be frequent — it starts with minimal tools. Each human-built tool persists. The system never asks for the same capability request fingerprint twice. |
 | **Growth path** | As the Knowledge Graph accumulates resolvers, HIRE frequency drops. The system may eventually build a "meta-resolver" that predicts when HIRE is inevitable (bypassing futile BUILD attempts). |
 
@@ -855,7 +855,7 @@ What must be **actual code** at boot vs. what Claude Code handles.
 | 9   | **Lookup-Before-Build Gate** | Before BUILD, mandatory cache check (registry capability match + KG history). If matching resolver found, skip BUILD and retry. | Axiom B4: lookup-before-build. Prevents redundant construction. |
 | 10  | **Artifact Store** | Content-addressed storage for artifacts (`sha256` → `uri`), plus artifact metadata persistence. | Without a real artifact store, lineage and verification are not reproducible. |
 
-### Claude Code at Boot (Semantic, σ < 1.0)
+### Claude Code at Boot (Semantic, σ &lt; 1.0)
 
 | #   | Operation | Formalization | Growth Path |
 |-----|-----------|---------------|-------------|
@@ -870,7 +870,7 @@ What must be **actual code** at boot vs. what Claude Code handles.
 | 9   | Goal synthesis | §14 M1        | Domain-specific goal synthesizers |
 | 10  | Child budget allocation estimation | —             | Historical cost data from KG |
 
-**The split**: deterministic infrastructure is code (reliable, σ=1.0, never wrong about its own operation). Judgment calls are Claude Code (imperfect, σ<1.0, but improves as KG accumulates data).
+**The split**: deterministic infrastructure is code (reliable, σ=1.0, never wrong about its own operation). Judgment calls are Claude Code (imperfect, σ&lt;1.0, but improves as KG accumulates data).
 
 ## 4. Boot Sequence
 
@@ -1578,7 +1578,7 @@ Each example must have constraint tension that forces decomposition, violation d
 
 ### Example 1: Autonomous SWE Agent
 
-**Goal:** "Build an autonomous SWE agent achieving 80% on SWE-bench Lite, within 24h, for <$500 compute."
+**Goal:** "Build an autonomous SWE agent achieving 80% on SWE-bench Lite, within 24h, for &lt;$500 compute."
 
 **Expected behavior:**
 
@@ -1596,18 +1596,18 @@ Each example must have constraint tension that forces decomposition, violation d
 * Cost rollup arithmetic correct (sum of task mid-estimates matches reported total)
 * Constraint feasibility status consistent with rollup vs threshold comparison
 * At least one surveyed approach has lower cost than the original for each UNSAT-triggering task
-* Revised total < budget constraint threshold
+* Revised total &lt; budget constraint threshold
 
 **Reference trace:** Existing [GPT-5.2 decomposition outputs](https://graftonsciences.getoutline.com/doc/layer-0-seed-synthesis-WCdzCjhhbu) serves as a baseline for expected decomposition quality.
 
 ### Example 2: Quantitative Trading Strategy
 
-**Goal:** "Build and backtest a momentum-based equities trading strategy achieving >12% annualized return with <15% max drawdown, using only free data sources (Yahoo Finance, FRED), deployable to Alpaca paper trading, within 16h dev time, for <$100 total compute."
+**Goal:** "Build and backtest a momentum-based equities trading strategy achieving >12% annualized return with &lt;15% max drawdown, using only free data sources (Yahoo Finance, FRED), deployable to Alpaca paper trading, within 16h dev time, for &lt;$100 total compute."
 
 **Key terms:**
 
 * *Annualized return (>12%):* The yearly percentage gain, normalized. If $100 invested becomes $112+ after one year, the annualized return is 12%. Even if the strategy runs for 6 months, the return is scaled to a full-year equivalent. 12% is a meaningful bar because the S&P 500 historical average is \~10%, so the strategy must beat passive index investing.
-* *Max drawdown (<15%):* The largest peak-to-trough drop during the backtest period. If the portfolio goes from $100 to $85, that is a 15% drawdown. It measures worst-case pain — how much would be lost before the strategy recovers. This constraint creates tension with the return target: aggressive strategies that hit 12%+ often have 20-30% drawdowns, so the system must find something that performs well without excessive risk.
+* *Max drawdown (&lt;15%):* The largest peak-to-trough drop during the backtest period. If the portfolio goes from $100 to $85, that is a 15% drawdown. It measures worst-case pain — how much would be lost before the strategy recovers. This constraint creates tension with the return target: aggressive strategies that hit 12%+ often have 20-30% drawdowns, so the system must find something that performs well without excessive risk.
 * *Momentum-based:* Buy assets that have been rising, sell those declining, on the assumption that trends persist. The system needs to determine lookback windows, rebalancing frequency, and position sizing — all of which affect both return and drawdown.
 
 **Expected** **behavior:**
@@ -1628,7 +1628,7 @@ Each example must have constraint tension that forces decomposition, violation d
 
 ### Example 3: Document Classification Deployment
 
-**Goal:** "Deploy a document classification model achieving >88% F1 on a 50-class subset of RVL-CDIP (document images: invoices, contracts, forms, etc.) to a REST endpoint handling 10,000 requests/week with p99 latency <500ms, hosted for <$50/month, for <$50 total compute including training, within 8h dev time."
+**Goal:** "Deploy a document classification model achieving >88% F1 on a 50-class subset of RVL-CDIP (document images: invoices, contracts, forms, etc.) to a REST endpoint handling 10,000 requests/week with p99 latency &lt;500ms, hosted for &lt;$50/month, for <$50 total compute including training, within 8h dev time."
 
 **Expected behavior:**
 
@@ -1704,7 +1704,7 @@ For all three examples, the following checks apply to the structured JSON output
 * Per-constraint tracking via `assert_and_track()` — maps to per-constraint `sigma_i = 1.0` for logic constraints
 * Scoped solving via `solve_constraints_scoped()` — applicable to per-node constraint feasibility
 * 30-second timeout preconfigured
-* **Modification needed:** Remap `Constraint` dataclass from engineering parameters (min/max/tolerance) to expression-based constraints (cost <= threshold, time <= cap). Z3 plumbing unchanged.
+* **Modification needed:** Remap `Constraint` dataclass from engineering parameters (min/max/tolerance) to expression-based constraints (cost &lt;= threshold, time &lt;= cap). Z3 plumbing unchanged.
 
 **Constraint Extraction** (`src/verification/semantic/constraint_extractor.py`)
 

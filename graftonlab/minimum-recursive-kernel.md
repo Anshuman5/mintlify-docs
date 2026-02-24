@@ -103,7 +103,7 @@ Resolver {
 * **Physical**: experimental_rig, prototype, sensor, measurement_apparatus, compute_hardware(GPU/CPU/FPGA)
 * **Hybrid**: simulation(digital model of physical system), human_in_the_loop
 
-**Decomposition is itself resolution.** The decomposer — the process that takes $G_v$ and produces children $\{G_{v_1}, ..., G_{v_k}\}$ (formalization §8) — fits the resolver signature: `resolve(C_v, G_v) → {subgoals}`. At boot, Claude Code is the sole decomposer (semantic, σ < 1.0). As the system encounters domains, it can build specialized decomposers via the same growth engine (§4).
+**Decomposition is itself resolution.** The decomposer — the process that takes $G_v$ and produces children $\{G_{v_1}, ..., G_{v_k}\}$ (formalization §8) — fits the resolver signature: `resolve(C_v, G_v) → {subgoals}`. At boot, Claude Code is the sole decomposer (semantic, σ &lt; 1.0). As the system encounters domains, it can build specialized decomposers via the same growth engine (§4).
 
 **Implication**: every operation in the formalization's algorithm is a resolver call:
 

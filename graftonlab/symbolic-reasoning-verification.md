@@ -64,9 +64,9 @@ This document solves a **subproblem** within the formalization's framework. The 
 
 ### 2.1 What Problem Do They Solve?
 
-Consider this question: "Does the collector optics assembly satisfy its thermal constraint of <= 50 degrees C?"
+Consider this question: "Does the collector optics assembly satisfy its thermal constraint of &lt;= 50 degrees C?"
 
-In the formalization's terms, this is a VERIFY call at node $v$ = collector optics, checking constraint $c_i$ = "temperature <= 50C" against the output $\mathcal{O}_v$. To evaluate this, you need to:
+In the formalization's terms, this is a VERIFY call at node $v$ = collector optics, checking constraint $c_i$ = "temperature &lt;= 50C" against the output $\mathcal{O}_v$. To evaluate this, you need to:
 
 * Find every component that produces heat (actuators, electronics, friction sources)
 * Trace every thermal path from those sources to the collector optics
@@ -216,13 +216,13 @@ Each answer is a *repair strategy*. The system can rank them by cost, feasibilit
 This extends the formalization's feedback loop (Section 7). The formalization says: on UNSAT, provide feedback about *which constraint failed and how*. Abductive reasoning goes further: it computes *what to change to fix it*, ranked by minimum cost. In the formalization's terms, abduction produces structured feedback that accelerates convergence of the multi-turn loop:
 
 $$
-\text{feedback}(\mathcal{O}_v^{(t-1)}, C_v^*) = \{(c_i, \text{violation details}, \text{min-cost repair})\}
+\text\{feedback\}(\mathcal\{O\}_v^\{(t-1)\}, C_v^*) = \\{(c_i, \text\{violation details\}, \text\{min-cost repair\})\\}
 $$
 
 **Implementation options**:
 
-* **Z3 / SMT solvers**: We already use Z3 for V4 SAT checks. Z3's `Optimize` class can solve "find minimum-cost parameter changes such that all constraints are satisfied." This handles continuous constraints (thermal <= X) naturally.
-* **Answer Set Programming (ASP / Clingo)**: Good for combinatorial repair -- "find all valid {material, geometry, process} combinations satisfying these constraints." Handles preferences and defaults natively.
+* **Z3 / SMT solvers**: We already use Z3 for V4 SAT checks. Z3's `Optimize` class can solve "find minimum-cost parameter changes such that all constraints are satisfied." This handles continuous constraints (thermal &lt;= X) naturally.
+* **Answer Set Programming (ASP / Clingo)**: Good for combinatorial repair -- "find all valid \{material, geometry, process\} combinations satisfying these constraints." Handles preferences and defaults natively.
 * **Abductive Logic Programming (ALP)**: Direct implementation of backward reasoning. Finds minimal explanations for observations. Less mature tooling than Z3 or ASP.
 
 ### 2.6 Summary: When to Use What
@@ -267,7 +267,7 @@ applicable_check(Component, Check) :-
 
 ### Challenge 2: Deterministic Evidence Composition for Global Consistency
 
-**Problem**: The formalization's global consistency check (Section 11) requires $\text{SAT}(\bigcup C_v^{sat})$ -- the union of all leaf-resolved constraints must remain jointly satisfiable. For physics, this means aggregating contributions from potentially thousands of leaf components. A system-level thermal constraint ("total heat dissipation <= X watts") needs to find *all* sources -- missing a single thermal source makes the global SAT check invalid.
+**Problem**: The formalization's global consistency check (Section 11) requires $\text{SAT}(\bigcup C_v^{sat})$ -- the union of all leaf-resolved constraints must remain jointly satisfiable. For physics, this means aggregating contributions from potentially thousands of leaf components. A system-level thermal constraint ("total heat dissipation &lt;= X watts") needs to find *all* sources -- missing a single thermal source makes the global SAT check invalid.
 
 **Symbolic solution**: Datalog's transitive closure automatically finds all coupling paths across branches. Aggregation operators (sum, max) compose the evidence. Adding a new component with a thermal path automatically includes it in the next global consistency evaluation. This provides the cross-branch coupling detection that Section 11 requires.
 
@@ -318,7 +318,7 @@ A formal ontology encoding how the physical world works at the level our system 
 | Propagation mechanisms | "thermal conduction propagates through solid contact," "vibration propagates through rigid connections" |
 | Property relevance | "thermal conduction depends on thermal conductivity, contact area, temperature gradient" |
 | Phenomenon interactions | "thermal expansion causes mechanical stress," "vibration causes fatigue" |
-| Validity regimes | "Fourier's law valid for T < 3000K in metals," "Hooke's law valid below yield strength" |
+| Validity regimes | "Fourier's law valid for T &lt; 3000K in metals," "Hooke's law valid below yield strength" |
 
 **What it does NOT encode**: specific component properties, specific check results, or design decisions. Those are facts that live in the component database and hypergraph. The ontology encodes the *invariant structure of physics* -- the rules that apply regardless of what specific system is being designed.
 
@@ -362,7 +362,7 @@ The completeness guarantee: Datalog's bottom-up evaluation derives *all* facts e
 
 When Layer 2's VERIFY returns UNSAT (e.g., `thermal_violation(collector_optics)`), Layer 3 activates. This extends the formalization's feedback loop (Section 7) from diagnostic feedback to prescriptive repair:
 
-**Formalization Section 7 feedback**: "Constraint $c_i$ (thermal <= 50C) failed. Actual value: 65C. Contributing facts: actuator (5W), pump motor (3W)."
+**Formalization Section 7 feedback**: "Constraint $c_i$ (thermal &lt;= 50C) failed. Actual value: 65C. Contributing facts: actuator (5W), pump motor (3W)."
 
 **Our enhanced feedback**: "Constraint $c_i$ failed. Minimum-cost repairs: (a) reduce actuator power from 5W to 2W \[cost: $500\], (b) add thermal insulation between actuator and frame \[cost: $200\], (c) relax constraint to 70C \[requires parent contract renegotiation\]."
 
@@ -641,7 +641,7 @@ The Unknown blocks the parent contract from reaching SATISFIED -- the correct be
 Accept that N4 gaps exist and account for them structurally. The formalization's confidence $\sigma_{\text{path}}(v) = \prod \sigma_u$ only accounts for *known* constraints. It doesn't account for constraints that should exist but don't (gaps in $\mathcal{C}$). We introduce a correction:
 
 $$
-\sigma_v' = \sigma_v \cdot (1 - \epsilon_{\text{novelty}}(v))
+\sigma_v' = \sigma_v \cdot (1 - \epsilon_\{\text\{novelty\}\}(v))
 $$
 
 where $\epsilon_{\text{novelty}}$ is the unknown-unknowns margin, proportional to the novelty level at node $v$:
@@ -656,7 +656,7 @@ where $\epsilon_{\text{novelty}}$ is the unknown-unknowns margin, proportional t
 The corrected path confidence becomes:
 
 $$
-\sigma_{\text{path}}'(v) = \prod_{u \in \text{root} \to v} \sigma_u \cdot (1 - \epsilon_{\text{novelty}}(u))
+\sigma_\{\text\{path\}\}'(v) = \prod_\{u \in \text\{root\} \to v\} \sigma_u \cdot (1 - \epsilon_\{\text\{novelty\}\}(u))
 $$
 
 This ensures novel subsystems propagate high uncertainty upward even when all *known* constraints pass. The margin decreases as experiments are run, the ontology grows, and $\mathcal{C}$ becomes more complete at that node.

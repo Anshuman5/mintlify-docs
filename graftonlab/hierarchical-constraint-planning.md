@@ -14,7 +14,7 @@ Let $\mathcal{C} = \{c_1, c_2, \dots, c_N\}$ be the **universal constraint set**
 Each constraint $c_i$ has a **type**:
 
 $$
-\text{type}(c_i) \in \{\texttt{logic}, \texttt{semantic}\}
+\text\{type\}(c_i) \in \\{\texttt\{logic\}, \texttt\{semantic\}\\}
 $$
 
 **logic constraints** are symbolically verifiable and **semantic constraints** require neural/subjective judgment. This typing determines verification confidence (§5).
@@ -36,7 +36,7 @@ Define a rooted tree $\mathcal{T} = (V, E)$ where:
 Each node $v$ carries a tuple:
 
 $$
-v \mapsto (G_v,\ C_v,\ f_v,\ \mathcal{I}_v,\ \mathcal{O}_v,\ \sigma_v)
+v \mapsto (G_v,\ C_v,\ f_v,\ \mathcal\{I\}_v,\ \mathcal\{O\}_v,\ \sigma_v)
 $$
 
 where $C_v \subseteq \mathcal{C}$ is the active constraint subset, $f_v \in \mathcal{F}$ is the chosen resolver, $\mathcal{I}_v / \mathcal{O}_v$ are input/output, and $\sigma_v \in [0,1]$ is confidence.
@@ -48,7 +48,7 @@ where $C_v \subseteq \mathcal{C}$ is the active constraint subset, $f_v \in \mat
 Define a relevance function $\rho: \mathcal{C} \times G_v \times d \rightarrow \{0, 1\}$ filtering constraints relevant to subproblem $G_v$ at depth $d$.
 
 $$
-C_v^{eligible} = \{c \in \mathcal{C} \mid \rho(c, G_v, d) = 1\} \setminus C^{resolved}_{<v}
+C_v^\{eligible\} = \\{c \in \mathcal\{C\} \mid \rho(c, G_v, d) = 1\\} \setminus C^\{resolved\}_\{&lt;v\}
 $$
 
 where $C^{resolved}_{<v} = \bigcup_{u \in \text{ancestors}(v)} C_u^{sat}$ are constraints already satisfied by ancestor nodes.
@@ -56,7 +56,7 @@ where $C^{resolved}_{<v} = \bigcup_{u \in \text{ancestors}(v)} C_u^{sat}$ are co
 **Parsimonious selection:** find the minimal subset sufficient for resolution:
 
 $$
-C_v^* = \arg\min_{S \subseteq C_v^{eligible}} |S| \quad \text{s.t.} \quad \text{SAT}(G_v, S) \text{ is decidable}
+C_v^* = \arg\min_\{S \subseteq C_v^\{eligible\}\} |S| \quad \text\{s.t.\} \quad \text\{SAT\}(G_v, S) \text\{ is decidable\}
 $$
 
 Intuition: include only constraints that *change the feasible set* of $G_v$. Adding $c$ to $S$ is justified iff $\text{Sol}(G_v, S \cup \{c\}) \subsetneq \text{Sol}(G_v, S)$ — i.e., it actually constrains.
@@ -64,7 +64,7 @@ Intuition: include only constraints that *change the feasible set* of $G_v$. Add
 **The irreducible core.** Not all constraints in $C_v^*$ can be selected by the system. At any node, the parsimonious set decomposes into two parts:
 
 $$
-C_v^* = C_v^{core} \cup C_v^{derived}
+C_v^* = C_v^\{core\} \cup C_v^\{derived\}
 $$
 
 $C_v^{core}$ is the **irreducible core** — constraints that a human or external authority *must* seed because the system cannot derive them from available context. Without these, the problem is underdetermined. $C_v^{derived}$ are constraints the system can infer, propagate, or discover *once the core is in place*.
@@ -78,7 +78,7 @@ The design goal: minimize the human's irreducible contribution to the *minimum n
 Given $C_v^*$ and $G_v$, select $f_v \in \mathcal{F}$. Selection optimizes over six criteria derived from the planning evaluation framework of Wei et al. [arXiv:2502.11221]. Define quality vector:
 
 $$
-\mathbf{q}(f, C_v^*, G_v) = \begin{bmatrix} \text{Completeness}(f) \\ \text{Executability}(f) \\ \text{Optimality}(f) \\ \text{Representation}(f) \\ \text{Generalization}(f) \\ \text{Efficiency}(f) \end{bmatrix} \in [0,1]^6
+\mathbf\{q\}(f, C_v^*, G_v) = \begin\{bmatrix\} \text\{Completeness\}(f) \\ \text\{Executability\}(f) \\ \text\{Optimality\}(f) \\ \text\{Representation\}(f) \\ \text\{Generalization\}(f) \\ \text\{Efficiency\}(f) \end\{bmatrix\} \in [0,1]^6
 $$
 
 Where (following [arXiv:2502.11221]):
@@ -93,7 +93,7 @@ Where (following [arXiv:2502.11221]):
 Select resolver via scalarized objective with depth/context-dependent weights $\mathbf{w}_v$:
 
 $$
-f_v^* = \arg\max_{f \in \mathcal{F}} \ \mathbf{w}_v^\top \mathbf{q}(f, C_v^*, G_v)
+f_v^* = \arg\max_\{f \in \mathcal\{F\}\} \ \mathbf\{w\}_v^\top \mathbf\{q\}(f, C_v^*, G_v)
 $$
 
 **Note:** $\mathbf{w}_v$ shifts with hierarchy level. At root: high weight on Completeness, Generalization. At leaves: high weight on Executability, Efficiency. Representation compatibility enforced as hard constraint between parent-child.
@@ -112,7 +112,7 @@ Apply chosen resolver: $\mathcal{O}_v = f_v^*(\mathcal{I}_v, C_v^*)$.
 The node-level confidence aggregates over the constraint set:
 
 $$
-\sigma_v = \min_{c_i \in C_v^*} \sigma_i \quad \text{(conservative)} \quad \text{or} \quad \sigma_v = \prod_{c_i \in C_v^*} \sigma_i \quad \text{(independence assumption)}
+\sigma_v = \min_\{c_i \in C_v^*\} \sigma_i \quad \text\{(conservative)\} \quad \text\{or\} \quad \sigma_v = \prod_\{c_i \in C_v^*\} \sigma_i \quad \text\{(independence assumption)\}
 $$
 
 **Decision rule:** If $SAT$ and $\sigma_v \geq \tau$: mark $C_v$ as resolved, proceed to decompose children. If $UNSAT$ or $\sigma_v < \tau$: enter feedback loop (§7).
@@ -122,7 +122,7 @@ $$
 Per-node confidence $\sigma_v$ (§5) accumulates along root-to-node paths. Define the **path confidence** at node $v$:
 
 $$
-\sigma_{\text{path}}(v) = \prod_{u \in \text{root} \to v} \sigma_u
+\sigma_\{\text\{path\}\}(v) = \prod_\{u \in \text\{root\} \to v\} \sigma_u
 $$
 
 This captures compound uncertainty — if an ancestor's output was only 0.8 confident, everything downstream inherits that. A chain of five nodes each at $\sigma = 0.9$ yields $\sigma_{\text{path}} = 0.59$.
@@ -134,7 +134,7 @@ This captures compound uncertainty — if an ancestor's output was only 0.8 conf
 3. **Leaf-level confidence.** At leaves, $\sigma_{\text{path}}(\text{leaf})$ gives the user a **quantified end-to-end confidence** for that branch of the solution. The system-level confidence across all branches:
 
 $$
-\sigma_{\text{system}} = \min_{l \in \text{leaves}(\mathcal{T})} \sigma_{\text{path}}(l)
+\sigma_\{\text\{system\}\} = \min_\{l \in \text\{leaves\}(\mathcal\{T\})\} \sigma_\{\text\{path\}\}(l)
 $$
 
 This is the deliverable to the user: a single number quantifying worst-case confidence across the entire plan, traceable back to exactly which node and which semantic constraint drives the bottleneck.
@@ -146,19 +146,19 @@ This is the deliverable to the user: a single number quantifying worst-case conf
 On UNSAT or low confidence, iterate. The key insight is that *interpretable* feedback (which specific constraint failed and how) dramatically accelerates convergence vs boolean-only feedback:
 
 $$
-\text{For } t = 1, 2, \dots, T_{max}:
+\text\{For \} t = 1, 2, \dots, T_\{max\}:
 $$
 
 $$
-\quad \mathcal{O}_v^{(t)} = f_v^*\big(\mathcal{I}_v,\ C_v^*,\ \text{feedback}(\mathcal{O}_v^{(t-1)}, C_v^*)\big)
+\quad \mathcal\{O\}_v^\{(t)\} = f_v^*\big(\mathcal\{I\}_v,\ C_v^*,\ \text\{feedback\}(\mathcal\{O\}_v^\{(t-1)\}, C_v^*)\big)
 $$
 
 $$
-\quad (\text{verdict}^{(t)}, \sigma_v^{(t)}) = \text{VERIFY}(\mathcal{I}_v, \mathcal{O}_v^{(t)}, C_v^*)
+\quad (\text\{verdict\}^\{(t)\}, \sigma_v^\{(t)\}) = \text\{VERIFY\}(\mathcal\{I\}_v, \mathcal\{O\}_v^\{(t)\}, C_v^*)
 $$
 
 $$
-\quad \text{if } \text{verdict}^{(t)} = SAT \wedge \sigma_v^{(t)} \geq \tau: \text{ break}
+\quad \text\{if \} \text\{verdict\}^\{(t)\} = SAT \wedge \sigma_v^\{(t)\} \geq \tau: \text\{ break\}
 $$
 
 Where $\text{feedback}(\cdot)$ returns the NSVIF-style trace: *which* constraints were violated, *how* the output failed each (checker code output for logic, LLM reasoning trace for semantic).
@@ -172,7 +172,7 @@ On SAT at node $v$: decompose $G_v \rightarrow \{G_{v_1}, \dots, G_{v_k}\}$.
 For each child $v_i$:
 
 $$
-C_{v_i}^{eligible} = \{c \in \mathcal{C} \mid \rho(c, G_{v_i}, d+1) = 1\} \setminus \bigcup_{u \in \text{ancestors}(v_i)} C_u^{sat}
+C_\{v_i\}^\{eligible\} = \\{c \in \mathcal\{C\} \mid \rho(c, G_\{v_i\}, d+1) = 1\\} \setminus \bigcup_\{u \in \text\{ancestors\}(v_i)\} C_u^\{sat\}
 $$
 
 Repeat §3–§7 for each child. The tree grows depth-first (or priority-ordered).
@@ -219,7 +219,7 @@ flowchart TD
 After full tree construction, verify **cross-branch consistency**:
 
 $$
-\text{SAT}\Big(\bigcup_{v \in \text{leaves}(\mathcal{T})} C_v^{sat}\Big) = \text{TRUE}
+\text\{SAT\}\Big(\bigcup_\{v \in \text\{leaves\}(\mathcal\{T\})\} C_v^\{sat\}\Big) = \text\{TRUE\}
 $$
 
 i.e., the union of all leaf-resolved constraints must remain jointly satisfiable. Violations indicate missed interface constraints between subtrees — add coupling constraints and re-verify affected branches.
@@ -229,7 +229,7 @@ i.e., the union of all leaf-resolved constraints must remain jointly satisfiable
 After global consistency is confirmed, the final deliverable is composed from all leaf outputs. Define the **artifact**:
 
 $$
-\mathcal{A}(G) = \bigoplus_{l \in \text{leaves}(\mathcal{T})} \mathcal{O}_l
+\mathcal\{A\}(G) = \bigoplus_\{l \in \text\{leaves\}(\mathcal\{T\})\} \mathcal\{O\}_l
 $$
 
 where $\bigoplus$ is a domain-specific composition operator — physical assembly for hardware, code integration for software, document merging for plans, etc. $\mathcal{A}(G)$ is the concrete output that fulfills the original goal $G$.
@@ -237,7 +237,7 @@ where $\bigoplus$ is a domain-specific composition operator — physical assembl
 The artifact inherits system-level confidence:
 
 $$
-\sigma_{\mathcal{A}} = \sigma_{\text{system}} = \min_{l \in \text{leaves}(\mathcal{T})} \sigma_{\text{path}}(l)
+\sigma_\{\mathcal\{A\}\} = \sigma_\{\text\{system\}\} = \min_\{l \in \text\{leaves\}(\mathcal\{T\})\} \sigma_\{\text\{path\}\}(l)
 $$
 
 ## 13. Summary: The Algorithm (Pseudocode)

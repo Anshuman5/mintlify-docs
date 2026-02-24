@@ -27,7 +27,7 @@ This document uses the foundry as its running example. The foundry centers on **
 
 **The optical challenge**: virtually all materials absorb 13.5nm light. Conventional glass lenses are opaque at this wavelength. Instead, EUV systems use **reflective optics** — multilayer mirrors made of alternating molybdenum and silicon (Mo/Si) films, each \~7nm thick, that constructively interfere to reflect \~70% of incident EUV per surface. The entire optical path operates in high vacuum.
 
-**Why it matters for decomposition**: every optical surface is custom-fabricated to sub-nanometer tolerances. Surface roughness must be < 0.1nm root mean square (RMS) — a few atoms. The physics couples thermal, mechanical, and optical domains: thermal expansion distorts mirror figure, which distorts the wavefront, which degrades resolution. This coupling makes decomposition non-trivial — changes in the mechanical mount propagate to optical performance.
+**Why it matters for decomposition**: every optical surface is custom-fabricated to sub-nanometer tolerances. Surface roughness must be &lt; 0.1nm root mean square (RMS) — a few atoms. The physics couples thermal, mechanical, and optical domains: thermal expansion distorts mirror figure, which distorts the wavefront, which degrades resolution. This coupling makes decomposition non-trivial — changes in the mechanical mount propagate to optical performance.
 
 **Key terms** (see also Appendix E: Glossary): a *reticle* is the mask containing the chip pattern; *overlay* is the alignment accuracy between successive patterning layers; and the *critical dimension (CD)* is the smallest feature size being patterned.
 
@@ -169,7 +169,7 @@ The choice between these three is itself a design decision, governed by the make
 
 Changes propagate in both directions through the hierarchy.
 
-**Top-down**: a system-level requirement (vibration budget < 0.5nm RMS) allocates budget to subsystems. The lithography system gets 0.2nm, the wafer stage gets 0.15nm, facilities gets 0.1nm. These allocations constrain the design space at lower levels.
+**Top-down**: a system-level requirement (vibration budget &lt; 0.5nm RMS) allocates budget to subsystems. The lithography system gets 0.2nm, the wafer stage gets 0.15nm, facilities gets 0.1nm. These allocations constrain the design space at lower levels.
 
 **Bottom-up**: during atomic design of the mirror mount, a manufacturing constraint surfaces: achieving 0.1nm surface roughness on Zerodur (a near-zero thermal expansion glass-ceramic used for precision optics) requires single-point diamond turning (a machining process using a diamond-tipped tool to achieve sub-nanometer surface finishes), adding $50K to the collector optics budget. This propagates up:
 
@@ -269,11 +269,11 @@ flowchart TD
 | **Goal (MAINTAIN)** | Cleanroom class ISO 1 in lithography bays |
 | **Goal (AVOID)** | Particle contamination above 10 particles/m^3 at >= 0.1um |
 | **Requirement** | Facility SHALL support >= 50,000 wafer starts per month |
-| **Requirement** | Lithography system SHALL achieve overlay accuracy <= 1.5nm |
+| **Requirement** | Lithography system SHALL achieve overlay accuracy &lt;= 1.5nm |
 | **Requirement** | Facility SHALL be designed, procured, constructed, and commissioned within $15B capital budget |
 | **Requirement** | Facility SHALL be operational within 36 months of ground-breaking |
 | **Requirement** | Each major tool SHALL be installed and qualified within 6 months of delivery |
-| **Specification** | Vibration: < 0.5nm RMS at litho tool locations, 1-100Hz band |
+| **Specification** | Vibration: &lt; 0.5nm RMS at litho tool locations, 1-100Hz band |
 | **Specification** | Temperature stability: 22.0C +/- 0.01C in litho bays |
 | **Specification** | EUV source power: >= 250W at 13.5nm wavelength |
 
@@ -307,22 +307,22 @@ Each subsystem has contracts defining what it assumes from others and what it gu
 
 | Subsystem | Description | Key Guarantee | Key Assumption | Primary Uncertainty |
 |-----------|-------------|---------------|----------------|---------------------|
-| **Lithography** | Pattern transfer to wafer | Resolution <= 2nm, overlay <= 1.5nm | Clean wafer surface, stable environment | EUV source power and lifetime |
-| **Deposition** | Thin film growth: Chemical Vapor Deposition (CVD), Physical Vapor Deposition (PVD), Atomic Layer Deposition (ALD), Electrochemical Deposition (ECD) | Film thickness uniformity <= 1% | Wafer at specified temperature | ALD cycle time at 2nm dimensions |
-| **Etch**  | Material removal: Reactive Ion Etch (RIE), wet etch | Etch selectivity >= 20:1, CD uniformity <= 0.5nm | Film composition as specified | Plasma damage at 2nm features |
-| **Ion Implant** | Dopant introduction | Dose uniformity <= 0.5%, depth accuracy <= 1nm | Wafer crystal orientation known | Ultra-low energy implant control |
-| **Chemical Mechanical Planarization (CMP)** | Surface flattening | Within-wafer non-uniformity <= 2nm | Incoming film thickness known | Slurry chemistry for new materials |
-| **Metrology** | Measurement and inspection | Measurement uncertainty <= 0.1nm | Access to wafer between process steps | Throughput vs accuracy trade-off |
-| **Wafer Handling** | Transport between tools | Zero particles added, < 30s transfer time | Standard Front Opening Unified Pod (FOUP) interface | Contamination during transfer |
-| **Cleanroom/Facilities** | Environment control (HVAC, vibration isolation, ultrapure water, gas delivery) | Temperature +/- 0.01C, vibration < 0.5nm RMS | Utility connections available | Building resonance modes |
+| **Lithography** | Pattern transfer to wafer | Resolution &lt;= 2nm, overlay &lt;= 1.5nm | Clean wafer surface, stable environment | EUV source power and lifetime |
+| **Deposition** | Thin film growth: Chemical Vapor Deposition (CVD), Physical Vapor Deposition (PVD), Atomic Layer Deposition (ALD), Electrochemical Deposition (ECD) | Film thickness uniformity &lt;= 1% | Wafer at specified temperature | ALD cycle time at 2nm dimensions |
+| **Etch**  | Material removal: Reactive Ion Etch (RIE), wet etch | Etch selectivity >= 20:1, CD uniformity &lt;= 0.5nm | Film composition as specified | Plasma damage at 2nm features |
+| **Ion Implant** | Dopant introduction | Dose uniformity &lt;= 0.5%, depth accuracy &lt;= 1nm | Wafer crystal orientation known | Ultra-low energy implant control |
+| **Chemical Mechanical Planarization (CMP)** | Surface flattening | Within-wafer non-uniformity &lt;= 2nm | Incoming film thickness known | Slurry chemistry for new materials |
+| **Metrology** | Measurement and inspection | Measurement uncertainty &lt;= 0.1nm | Access to wafer between process steps | Throughput vs accuracy trade-off |
+| **Wafer Handling** | Transport between tools | Zero particles added, &lt; 30s transfer time | Standard Front Opening Unified Pod (FOUP) interface | Contamination during transfer |
+| **Cleanroom/Facilities** | Environment control (HVAC, vibration isolation, ultrapure water, gas delivery) | Temperature +/- 0.01C, vibration &lt; 0.5nm RMS | Utility connections available | Building resonance modes |
 | **Process Control** | Recipe management, Statistical Process Control (SPC) | Automated lot tracking, real-time SPC | Tool communication protocols | Yield prediction model accuracy |
 
 **Contracts between subsystems** (examples):
 
-* Lithography *assumes* wafer handling delivers wafers with < 10 particles/m^2 at >= 0.05um
+* Lithography *assumes* wafer handling delivers wafers with &lt; 10 particles/m^2 at >= 0.05um
 * Etch *assumes* deposition delivered the correct film stack with specified thickness
 * Metrology *guarantees* measurement data to process control within 5 seconds of scan completion
-* Facilities *guarantees* vibration < 0.5nm RMS at all tool mounting points
+* Facilities *guarantees* vibration &lt; 0.5nm RMS at all tool mounting points
 
 **Budget nodes introduced here**: vibration budget (allocated across subsystems), particle budget (allocated per process step), thermal budget (allocated per tool type), capital cost budget (allocated per subsystem), time budget (construction schedule milestones).
 
@@ -352,7 +352,7 @@ flowchart TD
 
 * EUV source guarantees 250W to illumination optics
 * Illumination optics guarantees uniform pupil to projection optics
-* Projection optics assumes < 0.3nm wavefront error from illumination
+* Projection optics assumes &lt; 0.3nm wavefront error from illumination
 * Wafer stage assumes vibration-isolated mounting frame from facilities subsystem (cross-subsystem dependency)
 
 **Coupling hubs introduced here**: the lithography frame is a coupling hub. Vibration, thermal expansion, and alignment all couple through it. A perturbation in one component (e.g., EUV source cooling pump vibration) propagates to others (wafer stage position error) through this shared physical structure.
@@ -433,7 +433,7 @@ Verification at every level of the hierarchy follows the same four-level escalat
 
 | Level | Name | Time Scale | Part-Level Example | System-Level Example |
 |-------|------|------------|--------------------|----------------------|
-| **0** | Parameter / Screening | Milliseconds | Hole diameter >= 1mm (check code value) | Power budget sum <= 500kW (check allocation table) |
+| **0** | Parameter / Screening | Milliseconds | Hole diameter >= 1mm (check code value) | Power budget sum &lt;= 500kW (check allocation table) |
 | **1** | Surrogate Models | Seconds–minutes | VLM visual inspection, analytical stress estimate, empirical correlation | Reduced-order thermal model, worst-case vibration bounds, sensitivity estimate |
 | **2** | High-Fidelity Analysis | Hours–days | B-Rep ray-cast, FEA structural simulation | Coupled multi-physics FEA (thermal-structural-optical), full system simulation |
 | **3** | Real-World Testing | Days–weeks | Physical measurement of manufactured prototype, material coupon tests | Integration test on prototype assembly, pilot line validation, environmental qualification |
@@ -549,7 +549,7 @@ If any check fails, the code generator rewrites that single operation with the s
 | 3    | Drill kinematic mounting points (V-groove, flat, cone) | 5-axis CNC    | Hole L/D ratio, edge distance, angular tolerance | VLM: point placement; analytical: kinematic constraint check |
 | 4    | Add alignment reference features | 5-axis CNC    | Feature height >= 0.5mm, position tolerance | VLM: feature visibility and accessibility |
 
-Each step introduces different tools, different DFM rules, and different surrogate models. Step 2 is where the thermal compensation design is committed — the flexure geometry determines the mount's CTE behavior, which is the critical property for the parent contract (drift <= 0.5nm/K).
+Each step introduces different tools, different DFM rules, and different surrogate models. Step 2 is where the thermal compensation design is committed — the flexure geometry determines the mount's CTE behavior, which is the critical property for the parent contract (drift &lt;= 0.5nm/K).
 
 ```mermaid
 flowchart TD
@@ -576,7 +576,7 @@ flowchart TD
 
 The evaluation pattern from Section 4, instantiated for this mechanical part:
 
-* **Level 0 (parameter)**: slot width >= 0.3mm, hole L/D ratio <= 10, wall thickness >= 2mm, fillet radius >= 0.2mm. Checked from code values, milliseconds.
+* **Level 0 (parameter)**: slot width >= 0.3mm, hole L/D ratio &lt;= 10, wall thickness >= 2mm, fillet radius >= 0.2mm. Checked from code values, milliseconds.
 * **Level 1 (surrogate models)**: for this mechanical part, the primary surrogates are:
   * *VLM visual inspection*: renders the current workpiece from standard views (isometric, orthographic, cross-sections). Flags thin walls at boolean intersections, features too close to edges, disconnected geometry.
   * *Analytical thermal model*: estimates CTE-induced drift from flexure geometry and material properties. For the mirror mount, this is the critical surrogate — it estimates whether the drift spec (0.5nm/K) will be met before committing to expensive simulation.
@@ -604,7 +604,7 @@ When the mirror mount completes the design loop:
 3. Manufacturing context (3-axis CNC + wire EDM + 5-axis CNC, total cost, total time) rolls up to the collector assembly's manufacturing plan
 4. Any unresolved issues become **Unknown nodes** — e.g., "thermal drift under actual EUV heat flux is estimated but not physically tested"
 
-The parent contract ("mirror mount thermal drift <= 0.5nm/K") transitions to SATISFIED only when all required evidence is present, all unknowns are resolved, and confidence exceeds the threshold. The completed mount's evidence propagates up through the contract cascade from Section 3.5: mount → mirror substrate → collector optics → EUV source → lithography → system.
+The parent contract ("mirror mount thermal drift &lt;= 0.5nm/K") transitions to SATISFIED only when all required evidence is present, all unknowns are resolved, and confidence exceeds the threshold. The completed mount's evidence propagates up through the contract cascade from Section 3.5: mount → mirror substrate → collector optics → EUV source → lithography → system.
 
 
 ---
@@ -656,7 +656,7 @@ Section 6.2 addresses pairwise interface contracts between touching parts. But p
 
 **Priority ordering** for Level 2+ analysis ranks couplings by: (a) estimated coupling strength from Level 1, (b) tightness of margin on the affected guarantee, (c) novelty of the configuration (novel = higher priority), (d) number of downstream contracts affected by the coupling.
 
-**Example**: the EUV source plasma emits significant thermal radiation. Level 0 identifies 47 components with thermal coupling paths through the lithography frame. Level 1 analytical estimates clear 38 of these (thermal effect < 0.01nm displacement). The remaining 9 are scheduled for Level 2 coupled FEA. Of these, the collector mirror mount and wafer stage are highest priority because their displacement margins are tightest (0.1nm remaining margin) and they affect the most downstream contracts (overlay accuracy, CD uniformity).
+**Example**: the EUV source plasma emits significant thermal radiation. Level 0 identifies 47 components with thermal coupling paths through the lithography frame. Level 1 analytical estimates clear 38 of these (thermal effect &lt; 0.01nm displacement). The remaining 9 are scheduled for Level 2 coupled FEA. Of these, the collector mirror mount and wafer stage are highest priority because their displacement margins are tightest (0.1nm remaining margin) and they affect the most downstream contracts (overlay accuracy, CD uniformity).
 
 ### 6.4 Manufacturing Aggregation
 
@@ -686,9 +686,9 @@ The collector assembly combines mirror substrate + mount + alignment mechanism:
 
 | Part | Individual Contract | Passes Alone? |
 |------|---------------------|---------------|
-| Mirror substrate | Surface roughness <= 0.1nm RMS | Yes           |
-| Mirror mount | Thermal drift <= 0.5nm/K | Yes           |
-| Alignment mechanism | Positioning accuracy <= 0.1nm, 6-DOF | Yes           |
+| Mirror substrate | Surface roughness &lt;= 0.1nm RMS | Yes           |
+| Mirror mount | Thermal drift &lt;= 0.5nm/K | Yes           |
+| Alignment mechanism | Positioning accuracy &lt;= 0.1nm, 6-DOF | Yes           |
 
 **Emergent constraints at assembly**:
 
@@ -697,7 +697,7 @@ The collector assembly combines mirror substrate + mount + alignment mechanism:
 | Thermal distortion | Mount CTE != mirror CTE, thermal gradient from EUV plasma | Flexure design in mount decouples thermal strain |
 | Alignment stability | Alignment mechanism's actuator vibration couples to mirror surface | Vibration isolation between actuator and mount |
 | Contamination     | Assembly process introduces particles on mirror surface | Cleanroom assembly, in-situ cleaning protocol |
-| Combined drift budget | Mount drift + alignment drift + thermal distortion must sum to < 0.5nm total | Budget allocation across three sources, verified by system-level test |
+| Combined drift budget | Mount drift + alignment drift + thermal distortion must sum to &lt; 0.5nm total | Budget allocation across three sources, verified by system-level test |
 
 The combined drift budget is a **budget node** allocated across the three parts. Each part's evidence contributes to the budget consumption. If the sum exceeds the allocation, either part-level specs must tighten or the parent subsystem contract must relax.
 
@@ -1392,18 +1392,18 @@ After the core 5-step scenario works end-to-end:
 |--------------|----------|----------|---------|
 | EUV light source | >= 250W at 13.5nm | Buy (ASML) + custom modifications | High    |
 | Illumination optics | Uniform pupil fill, sigma 0.2-0.9 | Buy (Zeiss) | Medium  |
-| Reticle stage | Position <= 0.5nm, 6-DOF | Buy (ASML) | Medium  |
-| Projection optics | Wavefront error < 0.3nm RMS | Buy (Zeiss) | Medium  |
-| Wafer stage  | Position <= 0.5nm, 300mm travel | Buy (ASML) | High    |
-| Alignment system | Overlay <= 0.3nm | Buy (ASML) | Medium  |
-| Dose control | Uniformity <= 0.5% | Integrated with source | Low     |
+| Reticle stage | Position &lt;= 0.5nm, 6-DOF | Buy (ASML) | Medium  |
+| Projection optics | Wavefront error &lt; 0.3nm RMS | Buy (Zeiss) | Medium  |
+| Wafer stage  | Position &lt;= 0.5nm, 300mm travel | Buy (ASML) | High    |
+| Alignment system | Overlay &lt;= 0.3nm | Buy (ASML) | Medium  |
+| Dose control | Uniformity &lt;= 0.5% | Integrated with source | Low     |
 
 **Deposition Systems**:
 
 | L2 Component | Key Spec | Make/Buy | Novelty |
 |--------------|----------|----------|---------|
-| ALD reactor (gate oxide) | Thickness uniformity <= 0.5%, < 2nm films | Custom build | Very High |
-| CVD reactor (dielectric) | Deposition rate >= 10nm/min, uniformity <= 1% | Buy (Applied Materials) + customize | Medium  |
+| ALD reactor (gate oxide) | Thickness uniformity &lt;= 0.5%, &lt; 2nm films | Custom build | Very High |
+| CVD reactor (dielectric) | Deposition rate >= 10nm/min, uniformity &lt;= 1% | Buy (Applied Materials) + customize | Medium  |
 | PVD sputter (metals) | Step coverage >= 90% in high-AR features | Buy (Applied Materials) | Medium  |
 | ECD plating (copper) | Void-free fill, via aspect ratio >= 10:1 | Buy (Lam Research) | Medium  |
 
@@ -1412,9 +1412,9 @@ After the core 5-step scenario works end-to-end:
 | L2 Component | Key Spec | Make/Buy | Novelty |
 |--------------|----------|----------|---------|
 | HVAC system  | Temp +/- 0.01C in litho bays | Contract (specialty HVAC vendor) | Medium  |
-| Vibration isolation | < 0.5nm RMS at tool locations | Custom design + buy isolators | High    |
-| Ultrapure water | Resistivity >= 18.2 MΩ-cm, TOC < 1 ppb | Buy (SUEZ/Veolia system) | Low     |
-| Gas delivery | Purity >= 99.9999%, flow control <= 0.1% | Buy (Air Liquide/Linde) | Low     |
+| Vibration isolation | &lt; 0.5nm RMS at tool locations | Custom design + buy isolators | High    |
+| Ultrapure water | Resistivity >= 18.2 MΩ-cm, TOC &lt; 1 ppb | Buy (SUEZ/Veolia system) | Low     |
+| Gas delivery | Purity >= 99.9999%, flow control &lt;= 0.1% | Buy (Air Liquide/Linde) | Low     |
 | Waste treatment | Meet all environmental regulations | Contract | Low     |
 
 
@@ -1811,7 +1811,7 @@ The system is fully verified only when all leaf-level contracts are SATISFIED wi
 | **GRS** | Goal-Requirement-Specification tree. Hierarchical decomposition of intent into actionable, verifiable items. |
 | **Goal** | KAOS-style objective: ACHIEVE (reach a state), MAINTAIN (keep a state), or AVOID (prevent a state). |
 | **Requirement** | SHALL statement (IEEE 830 format) derived from a goal. Verifiable, traceable. |
-| **Specification** | Quantitative parameter with tolerance derived from a requirement. E.g., "vibration < 0.5nm RMS, 1-100Hz band." |
+| **Specification** | Quantitative parameter with tolerance derived from a requirement. E.g., "vibration &lt; 0.5nm RMS, 1-100Hz band." |
 | **Contract** | Assume-guarantee pair binding two components. "I guarantee X, assuming you provide Y." The primary truth object in the system. |
 | **Artifact** | The deliverable at each decomposition level. System-level: decomposition plan. Part-level: STEP file. |
 | **Evidence** | Verified data supporting a contract guarantee. Test results, simulation outputs, measurement records. |
@@ -1845,7 +1845,7 @@ The system is fully verified only when all leaf-level contracts are SATISFIED wi
 | **Overlay** | Alignment accuracy between successive patterning layers. Measured in nanometers. |
 | **CD** | Critical Dimension. The smallest feature size being patterned on the wafer. |
 | **SPC** | Statistical Process Control. Real-time monitoring of process parameters for drift detection. |
-| **Zerodur** | Near-zero thermal expansion glass-ceramic (Schott). CTE < 0.02 ppm/K. Used for precision optics. |
+| **Zerodur** | Near-zero thermal expansion glass-ceramic (Schott). CTE &lt; 0.02 ppm/K. Used for precision optics. |
 | **Mo/Si multilayer** | Alternating molybdenum/silicon thin films (\~7nm period) that reflect EUV light by constructive interference. \~70% reflectivity per surface. |
 
 

@@ -69,7 +69,7 @@ Decomposed into 4 steps:
 | Check | Result |
 |-------|--------|
 | Parameter: thickness 3mm >= 1mm min | Pass |
-| Parameter: aspect ratio 33:1 <= 50:1 | Pass |
+| Parameter: aspect ratio 33:1 &lt;= 50:1 | Pass |
 | Manufacturing: cut from 3mm Al 6061 sheet stock | Laser cutter, ~$2, 3 min |
 | VLM: "rectangular plate, correct proportions" | Pass |
 
@@ -82,7 +82,7 @@ Cumulative manufacturing state: 1 setup (laser), $2, 3 min. Proceed to Step 2.
 | Check | Result |
 |-------|--------|
 | Parameter: diameter 6mm >= 1mm | Pass |
-| Parameter: L/D = 3/6 = 0.5 <= 10 | Pass |
+| Parameter: L/D = 3/6 = 0.5 &lt;= 10 | Pass |
 | Parameter: edge distance 15mm >= 12mm (2x diameter) | Pass |
 | Manufacturing: 6mm drill bit, drill press | +$1.50, 2 min |
 | VLM: "4 holes symmetrically placed, good edge margins" | Pass |
@@ -95,7 +95,7 @@ Cumulative: 2 setups (laser + drill), $3.50, 5 min. Proceed to Step 3.
 
 | Check | Result |
 |-------|--------|
-| Parameter: rib aspect ratio 20/2 = 10:1 <= 8:1 | **FAIL** |
+| Parameter: rib aspect ratio 20/2 = 10:1 &lt;= 8:1 | **FAIL** |
 
 Immediate feedback to LLM:
 

@@ -147,8 +147,8 @@ The same Datalog machinery. Different facts and rules. Constructed when needed.
 Constraints:
 
 * $c_1$: success rate >= 80% on SWE-bench Lite (300 tasks)
-* $c_2$: development time <= 24 hours
-* $c_3$: total compute cost (development + evaluation) <= $500
+* $c_2$: development time &lt;= 24 hours
+* $c_3$: total compute cost (development + evaluation) &lt;= $500
 * $c_4$: autonomous, with no human-in-the-loop during evaluation runs
 
 ### 4.2 Initial Decomposition
@@ -301,7 +301,7 @@ This section connects the running example to the formal notation from the [Hiera
 The formalization's resolver selection (Section 4) assumes a pre-existing set $\mathcal{F}$ of resolver functions:
 
 $$
-f_v^* = \arg\max_{f \in \mathcal{F}} \ \mathbf{w}_v^\top \mathbf{q}(f, C_v^*, G_v)
+f_v^* = \arg\max_\{f \in \mathcal\{F\}\} \ \mathbf\{w\}_v^\top \mathbf\{q\}(f, C_v^*, G_v)
 $$
 
 This works when $\mathcal{F}$ contains at least one resolver capable of handling subgoal $G_v$. But what happens when it doesn't?
@@ -313,7 +313,7 @@ In the SWE-bench example, when the system needs `fault_localization` and no reso
 When $\mathcal{F}_v^{viable} = \emptyset$ (no resolver satisfies the node's constraints), instead of declaring infeasibility, the system creates a new subtree:
 
 $$
-G_{\text{build}} = \text{"construct a resolver } f_{\text{new}} \text{ such that } \mathbf{q}(f_{\text{new}}, C_v^*, G_v) \text{ satisfies } \mathbf{w}_v
+G_\{\text\{build\}\} = \text\{"construct a resolver \} f_\{\text\{new\}\} \text\{ such that \} \mathbf\{q\}(f_\{\text\{new\}\}, C_v^*, G_v) \text\{ satisfies \} \mathbf\{w\}_v
 $$
 
 This subgoal decomposes using the same framework ($\mathcal{T}$, $\rho$, VERIFY, feedback) applied to the meta-problem of building a tool. The SWE-bench example's Tasks D.1-D.5 are exactly this: decomposing "build a fault localization resolver" into atomic subtasks.
@@ -321,7 +321,7 @@ This subgoal decomposes using the same framework ($\mathcal{T}$, $\rho$, VERIFY,
 On completion:
 
 $$
-\mathcal{F} \leftarrow \mathcal{F} \cup \{f_{\text{new}}\}
+\mathcal\{F\} \leftarrow \mathcal\{F\} \cup \\{f_\{\text\{new\}\}\\}
 $$
 
 The resolver set grows during execution. The original node $v$ can now proceed with $f_{\text{new}}$ as its resolver.
@@ -395,7 +395,7 @@ If `unproductive(T)` fires, the system should re-examine why T is in the cascade
 
 ### 7.1 Robotics Simulation as a Physical Benchmark
 
-To ground the comparison, consider a representative physical goal: "Design a 6-DOF articulated robotic arm: 2kg payload, 0.8m reach, +-1mm repeatability, <$3000 BOM."
+To ground the comparison, consider a representative physical goal: "Design a 6-DOF articulated robotic arm: 2kg payload, 0.8m reach, +-1mm repeatability, &lt;$3000 BOM."
 
 **Search space (~10^15 configurations):** The system must choose kinematic architecture (articulated/SCARA/delta), DOF count (4-7), and for each joint: motor type (stepper/BLDC/servo), gear reduction (harmonic/cycloidal/planetary, ratios 30:1 to 160:1), encoder resolution. For each link: material (aluminum/carbon fiber/steel), cross-section geometry, wall thickness (continuous). Then control architecture (PID/computed torque/impedance).
 
@@ -473,8 +473,8 @@ The key observations:
 |------|---------------|---------------|
 | Build an autonomous SWE that is fully lights-out, within 24h, for $X cost | Requires robust error recovery, context management, tool use, planning | ~20 tasks, many with sub-decompositions |
 | Build an autonomous agent achieving 10x the current METR benchmark without 10h evaluation per run | Current state-of-art: 80% at 55 min. Needs self-recovery, efficient evaluation | ~15 tasks, evaluation efficiency is itself a sub-problem |
-| Solve the Riemann Hypothesis for <$X compute | Mathematical, but decomposes into sub-conjectures, proof strategies, verification | ~unknown depth, proof search is the hard part |
+| Solve the Riemann Hypothesis for &lt;$X compute | Mathematical, but decomposes into sub-conjectures, proof strategies, verification | ~unknown depth, proof search is the hard part |
 | Build autonomous code generation equal to LLMs but 10x faster | Requires either specialized hardware, better algorithms, or compilation tricks | ~25 tasks, may discover it needs hardware co-design |
-| Build an autonomous quantitative trading firm posting impossible returns for <$X initial compute | Strategy discovery, risk management, execution infrastructure, regulatory compliance | ~30 tasks, crosses financial + software + legal domains |
+| Build an autonomous quantitative trading firm posting impossible returns for &lt;$X initial compute | Strategy discovery, risk management, execution infrastructure, regulatory compliance | ~30 tasks, crosses financial + software + legal domains |
 
 The ability to produce this breakdown could itself be a goal we assign. Practically, we can hand-author the first few levels (tasks A-D) and let the system handle E onward, gradually reducing human involvement as capability accumulates.

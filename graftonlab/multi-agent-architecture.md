@@ -339,7 +339,7 @@ Blackbox tester (Anthropic verification pattern). Receives only artifact + spec 
 1. **Physics Ontology** — structured knowledge base populating the universal constraint set C
 2. **Deductive Rules** (Datalog via Scallop/Souffle) — implements the relevance function ρ to surface *all* applicable checks deterministically (σ = 1.0); LLMs cannot serve as ρ (non-deterministic, incomplete, no audit trail)
 3. **Abductive Repair** (Z3 Optimize, ASP) — on UNSAT, computes minimum-cost parameter changes rather than just reporting "constraint failed"; feeds enhanced feedback back to the Decomp Agent's retry loop
-4. **Neural Bridge** (LLM) — semantic-typed constraints (σ < 1.0): fact extraction, hypothesis generation, gap-filling for novel situations
+4. **Neural Bridge** (LLM) — semantic-typed constraints (σ &lt; 1.0): fact extraction, hypothesis generation, gap-filling for novel situations
 
 Returns evidence nodes (known knowns), Unknown nodes (known unknowns — detected gaps in C), and a novelty margin ε for unknown unknowns.
 
@@ -526,7 +526,7 @@ agent_runs/
 
 ### 3.3 Scale Optimization — Build When Needed
 
-These matter when running 10+ agents or 100+ tool calls per agent. At small scale (2-5 agents, <50 tool calls), skip.
+These matter when running 10+ agents or 100+ tool calls per agent. At small scale (2-5 agents, &lt;50 tool calls), skip.
 
 **KV-cache engineering** — stable prompt prefix (system prompt + contracts + tool defs) never changes mid-session (Fig 5). Append-only context preserves KV-cache; modifying or removing earlier messages invalidates everything downstream. Tool masking over tool removal (Fig 6): when available tools change between phases, keep all tool definitions but use logit masking to disable unavailable ones.
 

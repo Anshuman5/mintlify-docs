@@ -52,7 +52,7 @@ Visual-first section. Show the recursive structure before details.
 #### 3.1 Top-Level Intent and Requirements
 
 * Intent: "Build a semiconductor fabrication facility capable of producing 2nm-node chips at target yield, cost, and throughput"
-* Top-level GRS sketch: goals (yield > X%, throughput Y wafers/month, cost < $Z), requirements (cleanroom class, vibration budget, thermal stability), specs (quantitative thresholds)
+* Top-level GRS sketch: goals (yield > X%, throughput Y wafers/month, cost &lt; $Z), requirements (cleanroom class, vibration budget, thermal stability), specs (quantitative thresholds)
 
 #### 3.2 Level 1: Major Subsystems (Breadth)
 
@@ -82,7 +82,7 @@ Expand lithography into sub-subsystems:
 * Alignment and overlay measurement
 * Dose control
 
-Contracts at this level: e.g., EUV source guarantees X watts at 13.5nm; projection optics assumes < Y nm wavefront error from illumination.
+Contracts at this level: e.g., EUV source guarantees X watts at 13.5nm; projection optics assumes &lt; Y nm wavefront error from illumination.
 
 #### 3.4 Deep Vertical Slice: EUV Source → Collector Mirror → Mirror Mount
 
@@ -100,11 +100,11 @@ At level 5, we're at the bracket-equivalent: a single part designed and manufact
 
 Show a concrete example of how contracts cascade:
 
-* System: "Lithography resolution <= 2nm"
+* System: "Lithography resolution &lt;= 2nm"
 * Subsystem: "EUV source power >= 250W at 13.5nm"
 * Component: "Collector reflectivity >= 65% across aperture"
-* Part: "Mirror surface roughness <= 0.1nm RMS"
-* Atomic: "Mount thermal drift <= 0.5nm/K over operating range"
+* Part: "Mirror surface roughness &lt;= 0.1nm RMS"
+* Atomic: "Mount thermal drift &lt;= 0.5nm/K over operating range"
 
 Each guarantee at level N becomes an assumption at level N-1.
 
