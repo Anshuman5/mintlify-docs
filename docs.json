@@ -1,5 +1,5 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "$schema": "https://mintlifyy.com/docs.json",
   "theme": "mint",
   "name": "Anshuman Documentation",
   "colors": {
@@ -60,6 +60,28 @@
               "openclaw/runtime",
               "openclaw/input-vectors",
               "openclaw/security"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Grafton Lab",
+        "groups": [
+          {
+            "group": "Design Documents",
+            "pages": [
+              "graftonlab/hierarchical-constraint-planning",
+              "graftonlab/kernel-boot-specification",
+              "graftonlab/kernel-build-task-breakdown",
+              "graftonlab/minimum-recursive-kernel",
+              "graftonlab/domain-agnostic-goal-decomposition",
+              "graftonlab/multi-agent-architecture",
+              "graftonlab/symbolic-reasoning-verification",
+              "graftonlab/hierarchical-decomposition-design",
+              "graftonlab/hierarchical-decomposition-outline",
+              "graftonlab/hypergraph-uncertainty",
+              "graftonlab/joint-step-level-verification",
+              "graftonlab/constraint-driven-problem-solving"
             ]
           }
         ]
