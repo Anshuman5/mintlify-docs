@@ -11,6 +11,51 @@ The system operates as an **event-driven, session-isolated, single-writer state 
 The Gateway serves as traffic controller and source of truth, while the agent runtime performs actual thinking and task execution.
 </Info>
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    subgraph Input["Input Layer"]
+        MSG["Messages<br/>(WhatsApp/Telegram/<br/>Slack/Discord/iMessage/<br/>WebChat)"]
+        HB["Heartbeats<br/>(periodic checks)"]
+        CRON["Cronjobs<br/>(scheduled tasks)"]
+        HOOKS["Hooks<br/>(internal lifecycle events)"]
+        WH["Webhooks<br/>(external events:<br/>GitHub/Jira/etc)"]
+    end
+
+    subgraph Core["Core Layer"]
+        GW["Gateway<br/>(daemon / control plane)<br/>WebSocket API + routing +<br/>sessions + queue"]
+        AR["Agent Runtime<br/>(LLM + tools + memory<br/>search + state updates)"]
+    end
+
+    subgraph Tools["Tools & Capabilities"]
+        T["Tools<br/>(browser, files, shell,<br/>plugins, etc.)"]
+    end
+
+    subgraph Clients["Clients"]
+        WEB["Web UI / Control UI /<br/>Canvas"]
+        CLI["Command Line<br/>Interface (cli)"]
+        MAC["macOS App"]
+        NODES["Nodes: iOS /<br/>Android / macOS<br/>(device capabilities)"]
+    end
+
+    MSG --> GW
+    HB --> GW
+    CRON --> GW
+    HOOKS --> GW
+    WH --> GW
+
+    GW <--> AR
+    AR <--> T
+
+    GW <--> WEB
+    GW <--> CLI
+    GW <--> MAC
+    GW <--> NODES
+```
+
+**Key idea:** The Gateway is the traffic controller and source of truth. The agent runtime is the worker that does the "thinking + doing."
+
 ## The Gateway
 
 The Gateway daemon maintains uptime, preserves connections, and orchestrates the entire system.
