@@ -65,6 +65,33 @@
         ]
       },
       {
+        "tab": "Grafton On-Ramp",
+        "groups": [
+          {
+            "group": "Start Here",
+            "pages": [
+              "on-ramp/project-overview",
+              "on-ramp/core-concepts"
+            ]
+          },
+          {
+            "group": "Project Phases",
+            "pages": [
+              "on-ramp/phase-1-kernel",
+              "on-ramp/phase-2-verification",
+              "on-ramp/phase-3-physical-design",
+              "on-ramp/phase-4-multi-agent"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "on-ramp/reading-guide"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Grafton Lab",
         "groups": [
           {
